@@ -1,5 +1,5 @@
 const prisma = require('../models/db');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
@@ -38,7 +38,8 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
     res.json({ token });
   } catch (err) {
-    res.status(500).json({ error: 'Error interno' });
+    console.error('Error en LOGIN:', err); // Log detallado para Vercel
+    res.status(500).json({ error: 'Error interno', details: err.message });
   }
 };
 
