@@ -94,7 +94,7 @@ export default function PassportPage() {
                   <div>
                     <h2 className="text-lg font-bold">¡Hola, {user.name}!</h2>
                     <p className="text-blue-100 text-sm">📚 {user.carrer}</p>
-                    <p className="text-blue-100 text-sm">📅 semestre 2025-2</p>
+                    <p className="text-blue-100 text-sm">📅 semestre 2026-1</p>
                   </div>
                 </div>
                 <div className="mt-3 bg-white bg-opacity-10 rounded-lg p-2">
