@@ -5,8 +5,6 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -18,8 +16,7 @@ export default function LoginPage() {
     
     try {
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-        email,
-        password,
+        email
       });
       localStorage.setItem("token", response.data.token);
       console.log("Login exitoso, redirigiendo al passport");
@@ -45,22 +42,19 @@ export default function LoginPage() {
         switch (status) {
           case 401:
             // Error de credenciales incorrectas
-            if (serverMessage.toLowerCase().includes('password') || 
-                serverMessage.toLowerCase().includes('contraseña')) {
-              errorMessage = "❌ Contraseña incorrecta. Verifica tu número de carnet.";
-            } else if (serverMessage.toLowerCase().includes('user') || 
+            if (serverMessage.toLowerCase().includes('user') || 
                        serverMessage.toLowerCase().includes('usuario') ||
                        serverMessage.toLowerCase().includes('email')) {
-              errorMessage = "❌ Usuario no encontrado. Verifica tu nombre de usuario.";
+              errorMessage = "❌ Usuario no encontrado. Verifica tu documento.";
             } else {
-              errorMessage = "❌ Usuario o contraseña incorrectos. Verifica tus credenciales.";
+              errorMessage = "❌ No se pudo validar el usuario. Verifica tu documento.";
             }
             break;
           case 403:
             errorMessage = "❌ No tienes autorización para acceder. Contacta al administrador.";
             break;
           case 404:
-            errorMessage = "❌ Usuario no encontrado. Verifica tu nombre de usuario.";
+            errorMessage = "❌ Usuario no encontrado. Verifica tu documento.";
             break;
           case 500:
             errorMessage = "❌ Error del servidor. Inténtalo más tarde.";
@@ -124,12 +118,12 @@ export default function LoginPage() {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Usuario
+                  Documento de identidad
                 </label>
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="Ej: andres.serrato-c"
+                    placeholder="Ej: 123456789"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 pl-12"
                     value={email}
                     onChange={(e) => setEmail(e.target.value.toLowerCase())}
@@ -138,36 +132,6 @@ export default function LoginPage() {
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <span className="text-gray-400">👤</span>
                   </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Contraseña
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Ingrese su carnet"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 pl-12 pr-12"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <span className="text-gray-400">🔒</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-blue-500 transition-colors duration-200 focus:outline-none"
-                  >
-                    {showPassword ? (
-                      <IoEye className="w-5 h-5" />
-                    ) : (
-                      <IoEyeOff className="w-5 h-5" />
-                    )}
-                  </button>
                 </div>
               </div>
 

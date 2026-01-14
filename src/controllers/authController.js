@@ -27,13 +27,14 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email } = req.body;
   try {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return res.status(401).json({ error: 'Credenciales inválidas' });
 
-    const valid = await bcrypt.compare(password, user.passwordHash);
-    if (!valid) return res.status(401).json({ error: 'Credenciales inválidas' });
+    // Login simplificado: solo se requiere el documento de identidad (email)
+    // const valid = await bcrypt.compare(password, user.passwordHash);
+    // if (!valid) return res.status(401).json({ error: 'Credenciales inválidas' });
 
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
     res.json({ token });
