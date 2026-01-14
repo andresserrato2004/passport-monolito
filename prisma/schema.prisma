@@ -12,8 +12,6 @@ model User {
   name          String?
   email         String?   @unique 
   career        String?   // Corregido de 'carrer' a 'career' y opcional
-  gender        String?   // Agregado
-  image         String?   // Agregado para guardar la referencia a S3
   passwordHash  String?
   createdAt     DateTime  @default(now())
   userPlaces    UserPlace[]
@@ -36,7 +34,7 @@ model UserPlace {
   userId     Int
   place      Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
   placeId    Int
-  visitedAt  DateTime @default(now())
+  vgenderisitedAt  DateTime @default(now())
 
   @@unique([userId, placeId])
 }
