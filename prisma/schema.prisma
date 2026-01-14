@@ -8,33 +8,33 @@ datasource db {
 }
 
 model User {
-  id            Int       @id
-  name          String?
-  email         String?   @unique 
-  career        String?   // Corregido de 'carrer' a 'career' y opcional
-  passwordHash  String?
-  createdAt     DateTime  @default(now())
-  userPlaces    UserPlace[]
+  id           Int         @id
+  name         String?
+  email        String      @unique
+  passwordHash String
+  createdAt    DateTime    @default(now())
+  career       String
+  userPlaces   UserPlace[]
 }
 
 model Place {
-  id             Int         @id @default(autoincrement())
-  code           String      @unique
-  name           String
-  description    String?
-  websiteUrl     String?
-  imageUrl       String?
-  createdAt      DateTime    @default(now())
-  userPlaces     UserPlace[]
+  id          Int         @id @default(autoincrement())
+  code        String      @unique
+  name        String
+  description String?
+  createdAt   DateTime    @default(now())
+  imageUrl    String?
+  websiteUrl  String?
+  userPlaces  UserPlace[]
 }
 
 model UserPlace {
-  id         Int      @id @default(autoincrement())
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     Int
-  place      Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
-  placeId    Int
-  visitedAt  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  placeId   Int
+  visitedAt DateTime @default(now())
+  place     Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, placeId])
 }

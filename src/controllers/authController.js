@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
-  const {id, name, email, carrer, password } = req.body;
+  const {id, name, email, career, password } = req.body;
   try {
     const hashed = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
         id: parseInt(id),
         name,
         email,
-        carrer,
+        career,
         passwordHash: hashed
       }
     });
@@ -19,7 +19,7 @@ exports.register = async (req, res) => {
       id: user.id, 
       name: user.name,
       email: user.email,
-      carrer: user.carrer
+      career: user.career
     });
   } catch (err) {
     res.status(400).json({ error: 'Correo ya registrado' , err });
@@ -51,7 +51,7 @@ exports.getProfile = async (req, res) => {
         id: true,
         name: true,
         email: true,
-        carrer: true,
+        career: true,
         createdAt: true
       }
     });

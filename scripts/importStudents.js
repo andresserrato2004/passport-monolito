@@ -57,14 +57,14 @@ async function importStudents(filePath) {
           update: {
             name: String(name),
             email: email,
-            carrer: carrer, 
+            career: career, 
             passwordHash: passwordHash
           },
           create: {
             id: id,
             name: String(name),
             email: email,
-            carrer: carrer,
+            career: career,
             passwordHash: passwordHash
           }
         });
