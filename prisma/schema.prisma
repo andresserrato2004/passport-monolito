@@ -34,7 +34,7 @@ model UserPlace {
   userId     Int
   place      Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
   placeId    Int
-  vgenderisitedAt  DateTime @default(now())
+  visitedAt  DateTime @default(now())
 
   @@unique([userId, placeId])
 }
